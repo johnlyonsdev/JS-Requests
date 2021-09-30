@@ -2,11 +2,6 @@
 //THE TEST SERVER IS RUNNING ON LOCALHOST:3000//
 ////////////////////////////////////////////////
 
-
-
-
-
-
 // PROBLEM 1
 /*
     In the index.html file in this folder there is a button with an id of 'say-hello-button'!
@@ -139,7 +134,7 @@ document.getElementById("repeat-button").addEventListener('click', repeatMyParam
 
 // CODE HERE
 function query() {
-    axios.get('http://localhost:3000/query-test/?food=tacos')
+    axios.get('http://localhost:3000/query-test/?query1=Hmmm&query2=wow')
     .then(res => {
         console.log(res.data)
     })
@@ -164,8 +159,10 @@ document.getElementById("query-button").addEventListener('click', query)
     In the function that you wrote for Problem 8, change the URL to test a couple different scenarios. 
 
     1: Send no queries on the URL -- what happened? 
-
+        // When we sent no queries on the URL, we received the message "You sent an empty query!"
     2: Send more than 1 query on the URL -- what happened? 
+        //When we sent two queries on the URL, we received the message "You sent more than 1 query!"
+        //It also displayed the two queries below: "queries: {query1: 'Hmmm', query2: 'wow'}""
 */
 
 // Edit code in Problem 8
@@ -196,3 +193,20 @@ document.getElementById("query-button").addEventListener('click', query)
 */
 
 // CODE HERE 
+function createFood() {
+   event.preventDefault()
+   const foodInput = document.querySelector("input")
+    const body = {
+        "newFood": foodInput.value,
+    }
+    console.log(body)
+    axios.post("http://localhost:3000/food", body)
+        .then(res => {
+            console.log(res.data)
+            let listtext = document.getElementById("list-text")
+            listtext.textContent = res.data
+        })
+        foodInput.value =""
+}
+const form = document.querySelector("form")
+form.addEventListener("submit", createFood)
